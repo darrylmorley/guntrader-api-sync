@@ -42,10 +42,4 @@ S3_ENDPOINT=https://your_space_name.your_region.digitaloceanspaces.com
 
 ### Database credentials
 
-DATABASE_URL=postgresql://username:password@localhost:5432/guntrader
-
-## TODO
-
-- Create API routes for accessing db data.
-- Add integrations for other advertising platforms.
-- Tidy up where possible
+DATABASE_URL=postgresql://username:password@localhost:5432/dbname
