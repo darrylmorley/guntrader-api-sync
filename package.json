@@ -14,7 +14,10 @@
   "author": "Darryl Morley <darrylmorley.uk@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "bun run --hot src/index.ts"
+    "dev": "bun run --hot src/index.ts",
+    "start": "bun run src/index.ts",
+    "migrate": "npx prisma migrate deploy",
+    "build": "bun build src/index.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.645.0",
