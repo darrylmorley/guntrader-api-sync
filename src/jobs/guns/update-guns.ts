@@ -1,37 +1,12 @@
 import { schedule } from "node-cron";
-import prisma from "../../db/db";
 
+import prisma from "../../db/db";
 import log from "../../services/logger";
 import { saveImageToDO } from "../images/save-image";
 import deleteImageFromDO from "../images/delete-image";
+import fetchGunData from "../../services/gun-trader-client";
 
 import type { GunData } from "./types";
-
-const fetchGunData = async () => {
-  try {
-    const guns = await fetch(
-      "https://guntrader.uk/api/v1/gun-rack?withImages=true&withAttributes=true",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${Bun.env["GUNTRADER_API_KEY"]}`,
-        },
-      }
-    );
-
-    const data = await guns.json();
-
-    if (!Array.isArray(data)) {
-      throw new Error("API did not return an array of guns");
-    }
-
-    return data as GunData[];
-  } catch (error) {
-    log.error(error);
-    return [];
-  }
-};
 
 const updateDatabase = async (data: GunData[]) => {
   try {

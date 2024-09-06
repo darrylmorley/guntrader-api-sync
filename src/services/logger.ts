@@ -7,11 +7,11 @@ const logLocation = normalize(join(import.meta.dir, "../logs/app.log"));
 const log = logger({
   transport: {
     targets: [
-      // {
-      //   target: "pino-pretty", // Console logging with pretty printing
-      //   options: { colorize: true },
-      //   level: "info", // Set the log level for console
-      // },
+      {
+        target: "pino-pretty", // Console logging with pretty printing
+        options: { colorize: true },
+        level: "info", // Set the log level for console
+      },
       {
         target: "pino/file", // File logging
         options: {
