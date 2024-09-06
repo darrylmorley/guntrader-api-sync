@@ -32,6 +32,12 @@ model Gun {
   country_of_origin   String?
   guntrader_url       String
   price               Int
+  barrel_dimensions   String?
+  choke               String?
+  choke2              String?
+  orientation         String?
+  stock_dimensions    String?
+  trigger             String?
   images              Image[]
 
   createdAt DateTime @default(now())
