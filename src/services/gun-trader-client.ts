@@ -1,3 +1,6 @@
+import type { GunData } from "../jobs/guns/types";
+import log from "./logger";
+
 const fetchGunData = async () => {
   try {
     const guns = await fetch(
