@@ -10,7 +10,7 @@ import type { GunData } from "./types";
 const fetchGunData = async () => {
   try {
     const guns = await fetch(
-      "https://guntrader.uk/api/v1/gun-rack?withImages=true",
+      "https://guntrader.uk/api/v1/gun-rack?withImages=true&withAttributes=true",
       {
         method: "GET",
         headers: {
@@ -81,6 +81,10 @@ const updateDatabase = async (data: GunData[]) => {
     }
 
     for (const gun of data) {
+      const attributes = gun.attributes || [];
+      const findAttribute = (attrName: string) =>
+        attributes.find((attr) => attr.attribute === attrName)?.value || null;
+
       const gunData = {
         guntrader_id: gun.id.toString(),
         is_new: gun.is_new,
@@ -99,6 +103,12 @@ const updateDatabase = async (data: GunData[]) => {
         country_of_origin: gun.country_of_origin || null,
         guntrader_url: gun.url,
         price: Math.round(parseFloat(gun.sell_price) * 100),
+        barrel_dimensions: findAttribute("barreldimensions"),
+        choke: findAttribute("choke"),
+        choke2: findAttribute("choke2"),
+        orientation: findAttribute("orientation"),
+        stock_dimensions: findAttribute("stockdimensions"),
+        trigger: findAttribute("trigger"),
       };
 
       // Upsert gun and get its primary key (id)

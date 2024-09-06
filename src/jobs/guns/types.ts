@@ -12,6 +12,11 @@ export interface ImageData {
   is_primary: boolean;
 }
 
+interface Attribute {
+  attribute: string;
+  value: string;
+}
+
 export interface GunData {
   id: string;
   buy_price: number | null;
@@ -37,4 +42,5 @@ export interface GunData {
   type: string;
   year_of_manufacture: number | null;
   url: string;
+  attributes: Attribute[];
 }
