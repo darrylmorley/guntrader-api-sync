@@ -17,13 +17,13 @@ const fetchGunData = async () => {
     const data = await guns.json();
 
     if (!Array.isArray(data)) {
-      throw new Error("API did not return an array of guns");
+      throw new Error("API did not return an array");
     }
 
     return data as GunData[];
   } catch (error) {
     log.error(error);
-    return [];
+    process.exit(1);
   }
 };
 
