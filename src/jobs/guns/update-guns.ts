@@ -9,6 +9,11 @@ import fetchGunData from "../../services/gun-trader-client";
 import type { GunData } from "./types";
 
 const updateDatabase = async (data: GunData[]) => {
+  let productsUpdated = 0;
+  let productsDeleted = 0;
+  let imagesUpdated = 0;
+  let imagesDeleted = 0;
+
   try {
     const existingGunIds = await prisma.gun.findMany({
       select: {
@@ -45,6 +50,7 @@ const updateDatabase = async (data: GunData[]) => {
         if (!image.original_url) continue;
         const imageKey = image.original_url.split(".com/")[1];
         await deleteImageFromDO(imageKey); // Delete each image from DO
+        imagesDeleted++; // Increment count for deleted images
       }
 
       await prisma.gun.deleteMany({
@@ -52,7 +58,7 @@ const updateDatabase = async (data: GunData[]) => {
           guntrader_id: { in: deadGunIds },
         },
       });
-      log.info(`Deleted ${deadGunIds.length} dead guns from the database.`);
+      productsDeleted += deadGunIds.length;
     }
 
     for (const gun of data) {
@@ -93,7 +99,7 @@ const updateDatabase = async (data: GunData[]) => {
         create: gunData,
       });
 
-      log.info(`Upserted gun with ID: ${upsertedGun.id}`);
+      productsUpdated++;
 
       if (gun.images_count > 0) {
         // Map over images and process them in parallel
@@ -105,9 +111,6 @@ const updateDatabase = async (data: GunData[]) => {
 
           // Skip upload if the image is already present in the database with a valid original_url
           if (existingImage && existingImage.original_url) {
-            log.info(
-              `Image already exists with identifier: ${image.identifier}, skipping upload.`
-            );
             return;
           }
 
@@ -150,7 +153,7 @@ const updateDatabase = async (data: GunData[]) => {
               create: imageData,
             });
 
-            log.info(`Upserted image with identifier: ${image.identifier}`);
+            imagesUpdated++;
           } catch (error) {
             log.error("Error uploading image:", error);
           }
@@ -160,6 +163,11 @@ const updateDatabase = async (data: GunData[]) => {
         await Promise.all(imageUploadPromises);
       }
     }
+
+    log.info(`${productsUpdated} products updated`);
+    log.info(`${productsDeleted} products deleted`);
+    log.info(`${imagesUpdated} images updated`);
+    log.info(`${imagesDeleted} images deleted`);
   } catch (error) {
     log.error("Error updating database", error);
   }
