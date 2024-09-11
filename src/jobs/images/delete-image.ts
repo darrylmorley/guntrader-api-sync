@@ -8,7 +8,6 @@ async function deleteImageFromDO(imageKey: string) {
       Key: imageKey,
     });
     await doClient.send(command);
-    log.info(`Deleted image from DO: ${imageKey}`);
   } catch (error) {
     log.error(`Error deleting image from DO: ${imageKey}`, error);
   }
