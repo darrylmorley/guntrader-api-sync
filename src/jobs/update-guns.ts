@@ -1,10 +1,9 @@
 import { schedule } from "node-cron";
 
-import prisma from "../../db/db";
-import log from "../../services/logger";
-import { saveImageToDO } from "../images/save-image";
-import deleteImageFromDO from "../images/delete-image";
-import fetchGunData from "../../services/gun-trader-client";
+import prisma from "../db/db";
+import log from "../services/logger";
+import fetchGunData from "../services/gun-trader-client";
+import { saveImageToDO, deleteImageFromDO } from "../services/handle-images";
 
 import type { GunData } from "../types/types";
 
