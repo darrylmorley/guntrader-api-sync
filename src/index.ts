@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import guns from "./routes/guns";
 import images from "./routes/images";
-import updateGuns from "./jobs/guns/update-guns";
+import updateGuns from "./jobs/update-guns";
 
 const app = new Hono();
 updateGuns.start();
