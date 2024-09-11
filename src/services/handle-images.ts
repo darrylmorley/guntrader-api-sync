@@ -1,10 +1,23 @@
-import { doClient, PutObjectCommand } from "../../services/do-client";
-import log from "../../services/logger";
+import { DeleteObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
+import { doClient } from "./do-client";
+import log from "./logger";
 
 // Helper function to delay retries
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export async function saveImageToDO(
+async function deleteImageFromDO(imageKey: string) {
+  try {
+    const command = new DeleteObjectCommand({
+      Bucket: Bun.env["S3_SPACE_NAME"],
+      Key: imageKey,
+    });
+    await doClient.send(command);
+  } catch (error) {
+    log.error(`Error deleting image from DO: ${imageKey}`, error);
+  }
+}
+
+async function saveImageToDO(
   imageUrl: string,
   imageName: string,
   retries = 3,
@@ -60,3 +73,5 @@ export async function saveImageToDO(
   }
   return null; // In case all attempts fail
 }
+
+export { deleteImageFromDO, saveImageToDO };
