@@ -6,7 +6,7 @@ import { saveImageToDO } from "../images/save-image";
 import deleteImageFromDO from "../images/delete-image";
 import fetchGunData from "../../services/gun-trader-client";
 
-import type { GunData } from "./types";
+import type { GunData } from "../types/types";
 
 const updateDatabase = async (data: GunData[]) => {
   let productsUpdated = 0;
