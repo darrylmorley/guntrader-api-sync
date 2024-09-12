@@ -1,6 +1,7 @@
 #!/usr/bin/env bun
 import { Command } from "commander";
 import prisma from "./db/db";
+import log from "./services/logger";
 
 const program = new Command();
 
@@ -15,9 +16,9 @@ program
   .action(async () => {
     try {
       await prisma.$executeRawUnsafe(`TRUNCATE TABLE "Gun", "Image" CASCADE;`);
-      console.log("Tables truncated successfully");
+      log.info("Tables truncated successfully");
     } catch (error) {
-      console.error("Error truncating tables:", error);
+      log.error("Error truncating tables:", error);
     }
   });
 
