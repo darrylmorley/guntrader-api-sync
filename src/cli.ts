@@ -6,7 +6,7 @@ const program = new Command();
 
 program
   .name("guntrader-api-sync")
-  .description("CLI to manage Guntrader operations")
+  .description("CLI to manage Guntrader-API-Sync operations")
   .version("1.0.0");
 
 program
@@ -14,11 +14,11 @@ program
   .description("Reset the database by dropping all records")
   .action(async () => {
     try {
-      console.log("Resetting database...");
-      await prisma.$executeRaw`TRUNCATE TABLE gun, image CASCADE;`;
-      await prisma.$disconnect();
-      console.log("Database reset completed!");
+      await prisma.$executeRawUnsafe(`TRUNCATE TABLE "Gun", "Image" CASCADE;`);
+      console.log("Tables truncated successfully");
     } catch (error) {
-      console.error("Error resetting database:", error);
+      console.error("Error truncating tables:", error);
     }
   });
+
+program.parse(process.argv);
