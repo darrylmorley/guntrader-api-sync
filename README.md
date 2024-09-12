@@ -34,11 +34,11 @@ GUNTRADER_API_KEY=your_guntrader_api_key
 
 ### DigitalOcean Spaces credentials
 
-S3_ACCESS_KEY=your_S3_access_key
-S3_SECRET_KEY=your_S3_secret_key
-S3_SPACE_NAME=your_space_name
-S3_REGION=your_space_region
-S3_ENDPOINT=your_s3_endpoint
+- S3_ACCESS_KEY=your_S3_access_key
+- S3_SECRET_KEY=your_S3_secret_key
+- S3_SPACE_NAME=your_space_name
+- S3_REGION=your_space_region
+- S3_ENDPOINT=your_s3_endpoint
 
 ### Database credentials
 

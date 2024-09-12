@@ -59,3 +59,9 @@
 {"level":30,"time":1726045626429,"pid":4342,"hostname":"DARRYL-WORK-PC","msg":"0 images updated"}
 {"level":30,"time":1726045626430,"pid":4342,"hostname":"DARRYL-WORK-PC","msg":"0 images deleted"}
 {"level":30,"time":1726045626430,"pid":4342,"hostname":"DARRYL-WORK-PC","msg":"Database updated"}
+{"level":30,"time":1726137540368,"pid":494903,"hostname":"DARRYL-WORK-PC","msg":"Updating database"}
+{"level":30,"time":1726137543294,"pid":494903,"hostname":"DARRYL-WORK-PC","msg":"492 products updated"}
+{"level":30,"time":1726137543294,"pid":494903,"hostname":"DARRYL-WORK-PC","msg":"0 products deleted"}
+{"level":30,"time":1726137543294,"pid":494903,"hostname":"DARRYL-WORK-PC","msg":"0 images updated"}
+{"level":30,"time":1726137543294,"pid":494903,"hostname":"DARRYL-WORK-PC","msg":"0 images deleted"}
+{"level":30,"time":1726137543294,"pid":494903,"hostname":"DARRYL-WORK-PC","msg":"Database updated"}
