@@ -47,10 +47,6 @@ async function saveImageToDO(
 
       const fileUrl = `https://${Bun.env["S3_SPACE_NAME"]}.${Bun.env["S3_REGION"]}.digitaloceanspaces.com/${key}`;
 
-      log.info(
-        `Image uploaded successfully on attempt ${attempt}. File URL:`,
-        fileUrl
-      );
       return fileUrl; // Return the URL after successful upload
     } catch (error) {
       log.error(
