@@ -1,0 +1,22 @@
+{
+  "name": "trigger-traders-sync",
+  "version": "1.0.0",
+  "author": "Darryl Morley <darrylmorley.uk@gmail.com>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/bun": "^1.1.9",
+    "@types/node-cron": "^3.0.11",
+    "prisma": "^5.19.1"
+  },
+  "dependencies": {
+    "@prisma/client": "5.19.1",
+    "node-cron": "^3.0.3",
+    "pino": "^9.4.0"
+  }
+}

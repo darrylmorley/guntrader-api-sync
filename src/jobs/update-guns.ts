@@ -167,14 +167,14 @@ export const updateDatabase = async (data: GunData[]) => {
 
     log.info(`${productsUpdated} products updated`);
     log.info(`${productsDeleted} products deleted`);
-    log.info(`${imagesUpdated} images updated`);
+    log.info(`${imagesUpdated} images uploaded`);
     log.info(`${imagesDeleted} images deleted`);
   } catch (error) {
     log.error("Error updating database", error);
   }
 };
 
-const updateGuns = schedule("*/10 * * * *", async () => {
+const updateGuns = schedule("*/1 * * * *", async () => {
   log.info("Updating database");
 
   const gunData = await fetchGunData();
