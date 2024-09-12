@@ -7,7 +7,7 @@ import { saveImageToDO, deleteImageFromDO } from "../services/handle-images";
 
 import type { GunData } from "../types/types";
 
-const updateDatabase = async (data: GunData[]) => {
+export const updateDatabase = async (data: GunData[]) => {
   let productsUpdated = 0;
   let productsDeleted = 0;
   let imagesUpdated = 0;
@@ -174,7 +174,7 @@ const updateDatabase = async (data: GunData[]) => {
   }
 };
 
-const updateGuns = schedule("*/1 * * * *", async () => {
+const updateGuns = schedule("*/10 * * * *", async () => {
   log.info("Updating database");
 
   const gunData = await fetchGunData();
