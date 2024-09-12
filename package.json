@@ -19,10 +19,12 @@
     "migrate": "npx prisma migrate deploy",
     "build": "bun build src/index.ts"
   },
+  "bin": "src/cli.ts",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.645.0",
     "@prisma/client": "^5.19.1",
     "@types/pino-multi-stream": "^5.1.6",
+    "commander": "^12.1.0",
     "hono": "^4.5.11",
     "node-cron": "^3.0.3",
     "pino": "^9.4.0",
