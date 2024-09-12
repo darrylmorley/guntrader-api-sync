@@ -116,9 +116,11 @@ const updateDatabase = async (data: GunData[]) => {
           try {
             // Upload the image to DigitalOcean and get the new URL
             const imageName = (
-              gun.name +
-              "-" +
               gun.make +
+              "-" +
+              gun.model +
+              "-" +
+              gun.type +
               "-" +
               gun.calibre +
               "-" +
