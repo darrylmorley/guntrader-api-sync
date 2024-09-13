@@ -30,6 +30,8 @@ export const updateDatabase = async (data: GunData[]) => {
       (id) => !incomingGunIdsSet.has(id)
     );
 
+    log.info({ deadGunIds }, "Dead gun IDs");
+
     // Delete images from DO
     if (deadGunIds.length) {
       // Step 3: Fetch the corresponding images for the guns to be deleted
@@ -174,7 +176,7 @@ export const updateDatabase = async (data: GunData[]) => {
   }
 };
 
-const updateGuns = schedule("*/1 * * * *", async () => {
+const updateGuns = schedule("*/15 * * * *", async () => {
   log.info("Updating database");
 
   const gunData = await fetchGunData();
