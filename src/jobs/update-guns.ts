@@ -7,11 +7,24 @@ import { saveImageToDO, deleteImageFromDO } from "../services/handle-images";
 
 import type { GunData } from "../types/types";
 
+const logMemoryUsage = () => {
+  const memoryUsage = process.memoryUsage();
+  log.info(
+    `Memory Usage - RSS: ${(memoryUsage.rss / 1024 / 1024).toFixed(
+      2
+    )} MB, Heap Total: ${(memoryUsage.heapTotal / 1024 / 1024).toFixed(
+      2
+    )} MB, Heap Used: ${(memoryUsage.heapUsed / 1024 / 1024).toFixed(2)} MB`
+  );
+};
+
 export const updateDatabase = async (data: GunData[]) => {
   let productsUpdated = 0;
   let productsDeleted = 0;
   let imagesUpdated = 0;
   let imagesDeleted = 0;
+
+  logMemoryUsage(); // Log memory usage before starting the update process
 
   try {
     const existingGunIds = await prisma.gun.findMany({
@@ -19,6 +32,8 @@ export const updateDatabase = async (data: GunData[]) => {
         guntrader_id: true,
       },
     });
+
+    logMemoryUsage(); // Log memory usage after fetching existing gun IDs
 
     const existingGunIdsSet = new Set(
       existingGunIds.map((gun: any) => gun.guntrader_id)
@@ -60,7 +75,12 @@ export const updateDatabase = async (data: GunData[]) => {
         },
       });
       productsDeleted += deadGunIds.length;
+
+      deadGunIds.length = 0;
+      imagesToDelete.length = 0;
     }
+
+    logMemoryUsage(); // Log memory usage after deleting dead guns
 
     for (const gun of data) {
       const attributes = gun.attributes || [];
@@ -164,6 +184,10 @@ export const updateDatabase = async (data: GunData[]) => {
 
         // Wait for all image uploads to complete before moving to the next gun
         await Promise.all(imageUploadPromises);
+
+        // Clear image array after processing
+        imageUploadPromises.length = 0;
+        gun.images.length = 0;
       }
     }
 
@@ -171,6 +195,12 @@ export const updateDatabase = async (data: GunData[]) => {
     log.info(`${productsDeleted} products deleted`);
     log.info(`${imagesUpdated} images uploaded`);
     log.info(`${imagesDeleted} images deleted`);
+
+    // Clear data after processing
+    data.length = 0;
+    deadGunIds.length = 0;
+
+    logMemoryUsage(); // Log memory usage after updating
   } catch (error) {
     log.error("Error updating database", error);
   }
@@ -181,6 +211,8 @@ const updateGuns = schedule("*/15 * * * *", async () => {
 
   const gunData = await fetchGunData();
   await updateDatabase(gunData);
+
+  gunData.length = 0;
 
   log.info("Database updated");
 });

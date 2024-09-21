@@ -20,7 +20,9 @@ const fetchGunData = async () => {
       throw new Error("API did not return an array");
     }
 
-    return data as GunData[];
+    const filteredData = data.filter((gun) => gun.images_count !== 0);
+
+    return filteredData as GunData[];
   } catch (error) {
     log.error(error);
     process.exit(1);
