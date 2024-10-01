@@ -7,24 +7,11 @@ import { saveImageToDO, deleteImageFromDO } from "../services/handle-images";
 
 import type { GunData } from "../types/types";
 
-const logMemoryUsage = () => {
-  const memoryUsage = process.memoryUsage();
-  log.info(
-    `Memory Usage - RSS: ${(memoryUsage.rss / 1024 / 1024).toFixed(
-      2
-    )} MB, Heap Total: ${(memoryUsage.heapTotal / 1024 / 1024).toFixed(
-      2
-    )} MB, Heap Used: ${(memoryUsage.heapUsed / 1024 / 1024).toFixed(2)} MB`
-  );
-};
-
 export const updateDatabase = async (data: GunData[]) => {
   let productsUpdated = 0;
   let productsDeleted = 0;
   let imagesUpdated = 0;
   let imagesDeleted = 0;
-
-  logMemoryUsage(); // Log memory usage before starting the update process
 
   try {
     const existingGunIds = await prisma.gun.findMany({
@@ -32,8 +19,6 @@ export const updateDatabase = async (data: GunData[]) => {
         guntrader_id: true,
       },
     });
-
-    logMemoryUsage(); // Log memory usage after fetching existing gun IDs
 
     const existingGunIdsSet = new Set(
       existingGunIds.map((gun: any) => gun.guntrader_id)
@@ -79,8 +64,6 @@ export const updateDatabase = async (data: GunData[]) => {
       deadGunIds.length = 0;
       imagesToDelete.length = 0;
     }
-
-    logMemoryUsage(); // Log memory usage after deleting dead guns
 
     for (const gun of data) {
       const attributes = gun.attributes || [];
@@ -199,8 +182,6 @@ export const updateDatabase = async (data: GunData[]) => {
     // Clear data after processing
     data.length = 0;
     deadGunIds.length = 0;
-
-    logMemoryUsage(); // Log memory usage after updating
   } catch (error) {
     log.error("Error updating database", error);
   }
