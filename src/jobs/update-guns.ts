@@ -8,7 +8,6 @@ import { saveImageToDO, deleteImageFromDO } from "../services/handle-images";
 import type { GunData } from "../types/types";
 
 export const updateDatabase = async (data: GunData[]) => {
-  let productsUpdated = 0;
   let productsDeleted = 0;
   let imagesUpdated = 0;
   let imagesDeleted = 0;
@@ -103,8 +102,6 @@ export const updateDatabase = async (data: GunData[]) => {
         create: gunData,
       });
 
-      productsUpdated++;
-
       if (gun.images_count > 0) {
         // Map over images and process them in parallel
         const imageUploadPromises = gun.images.map(async (image, index) => {
@@ -174,7 +171,7 @@ export const updateDatabase = async (data: GunData[]) => {
       }
     }
 
-    log.info(`${productsUpdated} products updated`);
+    log.info(`${data.length} products updated`);
     log.info(`${productsDeleted} products deleted`);
     log.info(`${imagesUpdated} images uploaded`);
     log.info(`${imagesDeleted} images deleted`);
