@@ -184,7 +184,7 @@ export const updateDatabase = async (data: GunData[]) => {
   }
 };
 
-const updateGuns = schedule("*/15 * * * *", async () => {
+const updateGuns = async () => {
   log.info("Updating database");
 
   const gunData = await fetchGunData();
@@ -193,6 +193,6 @@ const updateGuns = schedule("*/15 * * * *", async () => {
   gunData.length = 0;
 
   log.info("Database updated");
-});
+};
 
 export default updateGuns;
