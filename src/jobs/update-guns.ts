@@ -188,10 +188,10 @@ const updateGuns = async () => {
   const gunData = await fetchGunData();
   await updateDatabase(gunData);
 
-  gunData.length = 0;
-
   log.info("Database updated");
-  process.exit("success");
+  await prisma.$disconnect();
+
+  process.exit(0);
 };
 
 export default updateGuns;
