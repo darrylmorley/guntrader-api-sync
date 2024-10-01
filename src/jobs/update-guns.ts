@@ -1,5 +1,3 @@
-import { schedule } from "node-cron";
-
 import prisma from "../db/db";
 import log from "../services/logger";
 import fetchGunData from "../services/gun-trader-client";
@@ -193,6 +191,7 @@ const updateGuns = async () => {
   gunData.length = 0;
 
   log.info("Database updated");
+  process.exit("success");
 };
 
 export default updateGuns;
