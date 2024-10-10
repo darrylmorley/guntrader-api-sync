@@ -27,7 +27,12 @@ export const updateDatabase = async (data: GunData[]) => {
       (id) => !incomingGunIdsSet.has(id)
     );
 
+    const newGunIds = [...incomingGunIdsSet].filter(
+      (id) => !existingGunIdsSet.has(id)
+    );
+
     log.info({ deadGunIds }, "Dead gun IDs");
+    log.info({ newGunIds }, "New gun IDs");
 
     // Delete images from DO
     if (deadGunIds.length) {
